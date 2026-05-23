@@ -84,10 +84,10 @@ html,body{height:100%;width:100%;background:#050505}
   font-family:'Barlow Condensed',sans-serif;
   font-weight:900;
   font-size:clamp(64px,10vw,104px);
-  line-height:0.88;
+  line-height:0.92;
   letter-spacing:-1px;
   text-transform:uppercase;
-  margin-bottom:0.4rem;
+  margin-bottom:1.2rem;
   opacity:0;
   animation:fadeUp 0.7s 0.5s forwards;
 }
@@ -115,23 +115,66 @@ html,body{height:100%;width:100%;background:#050505}
   animation:fadeUp 0.7s 0.75s forwards;
 }
 .stats{
-  display:flex;gap:28px;
+  display:flex;align-items:stretch;gap:0;
   margin-bottom:2rem;
   opacity:0;
   animation:fadeUp 0.7s 0.85s forwards;
 }
-.stat-val{
+/* Individual stat blocks separated by thin dividers */
+.stat-block{
+  display:flex;flex-direction:column;
+  justify-content:center;
+  padding:0 24px 0 0;
+  margin-right:24px;
+  border-right:1px solid rgba(255,255,255,0.1);
+}
+.stat-block:last-child{
+  border-right:none;
+  padding-right:0;
+  margin-right:0;
+}
+.stat-num{
   font-family:'Barlow Condensed',sans-serif;
-  font-size:30px;font-weight:800;
-  color:#fff;line-height:1;
+  font-size:40px;font-weight:900;
+  line-height:1;
+  letter-spacing:-1px;
+  color:#fff;
 }
-.stat-val sup{font-size:16px;color:var(--teal)}
+.stat-num span{
+  font-size:22px;font-weight:600;
+  letter-spacing:0;
+  vertical-align:super;
+  margin-left:1px;
+}
+.stat-num.pink{color:var(--pink)}
+.stat-num.pink span{color:var(--pink-light)}
 .stat-label{
-  font-size:10px;letter-spacing:2px;
+  font-size:9px;letter-spacing:2.5px;
   text-transform:uppercase;
-  color:rgba(255,255,255,0.3);
-  margin-top:3px;
+  color:rgba(255,255,255,0.28);
+  margin-top:5px;
+  font-weight:400;
 }
+/* Partner logo stat */
+.stat-partner{
+  display:flex;flex-direction:column;
+  justify-content:center;
+  gap:5px;
+}
+.stat-partner-label{
+  font-size:8px;letter-spacing:2.5px;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.22);
+  font-weight:500;
+}
+.stat-ikoyi-logo{
+  height:32px;width:auto;
+  filter:brightness(0) invert(1);
+  opacity:0.6;
+  display:block;
+  transition:opacity 0.2s;
+}
+.stat-ikoyi-logo:hover{opacity:0.9}
 .info-row{
   display:flex;flex-direction:column;
   gap:10px;margin-bottom:2.25rem;
@@ -176,30 +219,14 @@ html,body{height:100%;width:100%;background:#050505}
 }
 .btn-ig:hover{border-color:var(--pink);color:var(--pink-light)}
 .btn i{font-size:15px}
-/* ── PARTNER BADGE ── */
-.partner-badge{
+.badge{
   position:absolute;
-  top:2rem;right:2.5rem;
+  top:2.5rem;right:2.5rem;
   z-index:10;
-  display:flex;flex-direction:column;align-items:center;gap:8px;
+  width:96px;height:96px;
   opacity:0;
   animation:spinIn 0.9s 1.1s cubic-bezier(.34,1.56,.64,1) forwards;
 }
-.partner-label{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:8px;font-weight:600;
-  letter-spacing:3px;text-transform:uppercase;
-  color:rgba(255,255,255,0.3);
-  text-align:center;
-}
-.ikoyi-logo{
-  height:60px;width:auto;
-  filter:brightness(0) invert(1);
-  opacity:0.75;
-  transition:opacity 0.2s;
-}
-.ikoyi-logo:hover{opacity:1}
-.badge{width:96px;height:96px}
 .badge-ring{
   width:100%;height:100%;
   border:1.5px solid rgba(255,255,255,0.12);
@@ -263,8 +290,7 @@ html,body{height:100%;width:100%;background:#050505}
     justify-content:flex-start;
   }
   .headline{font-size:clamp(56px,16vw,88px);line-height:0.9}
-  .partner-badge{top:1.25rem;right:1.25rem}
-  .ikoyi-logo{height:44px}
+  .badge{top:1.25rem;right:1.25rem}
   .badge{width:72px;height:72px}
   .location-strip{padding:12px 2.5rem}
   .stats{gap:20px}
@@ -285,9 +311,7 @@ html,body{height:100%;width:100%;background:#050505}
   .stat-val{font-size:22px}
   .info-text{font-size:12px}
   .btn{font-size:11px;padding:11px 18px;letter-spacing:1.5px}
-  .partner-badge{top:1rem;right:1rem;gap:5px}
-  .partner-label{font-size:6px;letter-spacing:2px}
-  .ikoyi-logo{height:36px}
+  .badge{top:1rem;right:1rem}
   .badge{width:60px;height:60px}
   .badge-ring{border-width:1px}
   .badge-center{font-size:7px}
@@ -303,36 +327,26 @@ html,body{height:100%;width:100%;background:#050505}
   <div class="left-bar"></div>
 
   <div class="content">
-    <div class="eyebrow">
-      <div class="eyebrow-line"></div>
-      <span class="eyebrow-text">Ikoyi Club 1938 · Lagos, Nigeria</span>
-    </div>
-
     <div class="logo-wrap">
       <img src="SportsBridge_logo.png" alt="Sports Bridge International" class="sb-logo"/>
     </div>
 
     <div class="headline">
       <span class="stroke">We're</span>
-      <span class="accent">Renovat-</span>
-      <span class="solid">ing</span>
+      <span class="accent">Renovating</span>
     </div>
 
     <p class="tagline">Back stronger &mdash; watch this space</p>
     <div class="divider"></div>
 
     <div class="stats">
-      <div>
-        <div class="stat-val">5<sup>+</sup></div>
+      <div class="stat-block">
+        <div class="stat-num">5<span>+</span></div>
         <div class="stat-label">Sports</div>
       </div>
-      <div>
-        <div class="stat-val" style="color:var(--pink)">1<sup style="color:var(--pink-light)">st</sup></div>
+      <div class="stat-block">
+        <div class="stat-num pink">1<span>st</span></div>
         <div class="stat-label">Premium Hub</div>
-      </div>
-      <div>
-        <div class="stat-val">IKY<sup style="color:rgba(255,255,255,0.3);font-size:14px">'38</sup></div>
-        <div class="stat-label">Ikoyi Club</div>
       </div>
     </div>
 
@@ -359,10 +373,7 @@ html,body{height:100%;width:100%;background:#050505}
     </div>
   </div>
 
-  <div class="partner-badge">
-    <div class="partner-label">In Partnership With</div>
-    <img src="IkoyiClub_logo.png" alt="Ikoyi Club 1938" class="ikoyi-logo"/>
-    <div class="badge">
+  <div class="badge">
       <div class="badge-ring">
         <svg viewBox="0 0 96 96">
           <defs>
@@ -374,7 +385,6 @@ html,body{height:100%;width:100%;background:#050505}
         </svg>
         <div class="badge-center">2026</div>
       </div>
-    </div>
   </div>
 
   <div class="location-strip">
