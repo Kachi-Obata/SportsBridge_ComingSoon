@@ -186,14 +186,14 @@ html,body{height:100%;width:100%;background:#050505}
   transition:all 0.2s;border:none;
   clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
 }
-.btn-wa{background:#25D366;color:#fff}
-.btn-wa:hover{background:#1ebd5a}
+.btn-wa{background:var(--teal);color:#fff}
+.btn-wa:hover{background:var(--teal-light)}
 .btn-ig{
-  background:transparent;color:rgba(255,255,255,0.8);
-  border:1px solid rgba(255,255,255,0.2);
+  background:var(--pink);color:#fff;
+  border:none;
   clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
 }
-.btn-ig:hover{border-color:var(--pink);color:var(--pink-light)}
+.btn-ig:hover{background:var(--pink-light)}
 .btn i{font-size:15px}
 .badge{
   position:absolute;
@@ -224,8 +224,8 @@ html,body{height:100%;width:100%;background:#050505}
   position:absolute;
   bottom:0;left:5px;right:0;
   padding:14px 4.5rem;
-  background:rgba(255,255,255,0.025);
-  border-top:1px solid rgba(255,255,255,0.06);
+  background:rgba(5,5,5,0.55);
+  border-top:1px solid rgba(255,255,255,0.1);
   display:flex;align-items:center;gap:8px;flex-wrap:wrap;
   z-index:6;
   opacity:0;
@@ -235,7 +235,7 @@ html,body{height:100%;width:100%;background:#050505}
 .location-strip span{
   font-size:11px;letter-spacing:2.5px;
   text-transform:uppercase;
-  color:rgba(255,255,255,0.28);
+  color:rgba(255,255,255,0.55);
 }
 @keyframes fadeUp{
   from{opacity:0;transform:translateY(18px)}
@@ -262,20 +262,25 @@ html,body{height:100%;width:100%;background:#050505}
   }
   .content{
     width:100%;min-height:auto;
-    padding:8rem 2rem 8rem 2rem;
+    padding:8rem 2rem 2.5rem 2rem;
     justify-content:flex-start;
   }
   .headline{font-size:clamp(56px,16vw,88px);line-height:0.9}
   .badge{top:1.25rem;right:1.25rem}
   .badge{width:72px;height:72px}
-  .location-strip{padding:12px 2.5rem}
+  .location-strip{
+    position:static;
+    padding:16px 2rem;
+    background:rgba(5,5,5,0.85);
+    border-top:1px solid rgba(255,255,255,0.1);
+  }
   .stats{gap:0}
   .stat-block{padding:0 16px 0 0;margin-right:16px}
   .stat-num{font-size:32px}
   .stat-ikoyi-logo{height:44px}
 }
 @media(max-width:480px){
-  .content{padding:8rem 1.25rem 7rem 1.25rem}
+  .content{padding:8rem 1.25rem 2rem 1.25rem}
   .eyebrow-text{font-size:9px;letter-spacing:2.5px}
   .logo-wrap{top:1rem;left:1.25rem}
   .sb-logo{height:56px}
@@ -297,8 +302,8 @@ html,body{height:100%;width:100%;background:#050505}
   .badge{width:60px;height:60px}
   .badge-ring{border-width:1px}
   .badge-center{font-size:7px}
-  .location-strip{padding:10px 1.75rem;gap:6px}
-  .location-strip span{font-size:9px;letter-spacing:1.5px;line-height:1.5}
+  .location-strip{padding:12px 1.25rem;gap:6px}
+  .location-strip span{font-size:10px;letter-spacing:1.5px;line-height:1.5}
 }
 </style>
 </head>
