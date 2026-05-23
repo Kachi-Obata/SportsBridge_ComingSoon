@@ -52,17 +52,20 @@ html,body{height:100%;width:100%;background:#050505}
   display:flex;
   flex-direction:column;
   justify-content:center;
-  padding:4rem 4rem 5rem 4.5rem;
+  padding:7rem 4rem 5rem 4.5rem;
   width:60%;
   min-height:100vh;
 }
 .logo-wrap{
-  margin-bottom:2rem;
+  position:absolute;
+  top:2rem;
+  left:4.5rem;
+  z-index:20;
   opacity:0;
   animation:fadeUp 0.7s 0.35s forwards;
 }
 /* ── LOGO ── */
-.sb-logo{height:56px;width:auto;display:block}
+.sb-logo{height:72px;width:auto;display:block}
 
 /* ── HEADLINE ── */
 .headline{
@@ -142,7 +145,7 @@ html,body{height:100%;width:100%;background:#050505}
 }
 .stat-block--logo{justify-content:center}
 .stat-ikoyi-logo{
-  height:34px;width:auto;
+  height:52px;width:auto;
   filter:brightness(0) invert(1);
   opacity:0.65;
   display:block;
@@ -259,7 +262,7 @@ html,body{height:100%;width:100%;background:#050505}
   }
   .content{
     width:100%;min-height:auto;
-    padding:6rem 2rem 8rem 2.5rem;
+    padding:8rem 2rem 8rem 2rem;
     justify-content:flex-start;
   }
   .headline{font-size:clamp(56px,16vw,88px);line-height:0.9}
@@ -270,9 +273,10 @@ html,body{height:100%;width:100%;background:#050505}
   .stat-val{font-size:26px}
 }
 @media(max-width:480px){
-  .content{padding:5.5rem 1.25rem 7rem 1.75rem}
+  .content{padding:8rem 1.25rem 7rem 1.25rem}
   .eyebrow-text{font-size:9px;letter-spacing:2.5px}
-  .sb-logo{height:44px}
+  .logo-wrap{top:1rem;left:1.25rem}
+  .sb-logo{height:56px}
   .headline{
     font-size:clamp(48px,18vw,72px);
     line-height:0.9;
