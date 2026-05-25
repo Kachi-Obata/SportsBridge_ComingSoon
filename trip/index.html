@@ -72,6 +72,9 @@ body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);font
 .sport-label.tennis{color:var(--tennis)}
 .sport-label.badminton{color:var(--badminton)}
 .sport-label.squash{color:var(--squash)}
+.sport-dot.misc{background:#999}
+.sport-label.misc{color:#555}
+.sport-header.misc{border-bottom-color:#bbb}
 
 /* ── STORE CARD ── */
 .store-card{background:var(--card);border-radius:0;margin-bottom:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06);border:1px solid #e0e0e0}
@@ -245,6 +248,38 @@ body{padding-left:4px}
         <div class="pi-name">American Golf — Monument (Europe's #1 Golf Retailer)</div>
         <div class="pi-addr">30 Fish Street Hill, Monument, London EC3R 6DN</div>
         <a class="pi-maps" href="https://www.google.com/maps/search/?api=1&query=American+Golf+30+Fish+Street+Hill+Monument+London+EC3R+6DN" target="_blank">📍 Open in Maps</a>
+      </div>
+
+      <div class="priority-item">
+        <div class="pi-city">London · Jun 5–10</div>
+        <span class="pi-sport golf">Golf</span>
+        <div class="pi-name">Callaway Golf Europe</div>
+        <div class="pi-addr">Unit A27, Barwell Business Park, Chessington, Surrey KT9 2NY</div>
+        <a class="pi-maps" href="https://www.google.com/maps/search/?api=1&query=Callaway+Golf+Europe+Chessington+Surrey+KT9+2NY" target="_blank">📍 Open in Maps</a>
+      </div>
+
+      <div class="priority-item">
+        <div class="pi-city">London · Jun 5–10</div>
+        <span class="pi-sport golf">Golf</span>
+        <div class="pi-name">PXG London South (Parsons Xtreme Golf)</div>
+        <div class="pi-addr">Unit 1A, Sandown Industrial Park, Mill Road, Esher, Surrey KT10 8BL</div>
+        <a class="pi-maps" href="https://www.google.com/maps/search/?api=1&query=PXG+London+South+Unit+1A+Sandown+Industrial+Park+Esher+Surrey+KT10+8BL" target="_blank">📍 Open in Maps</a>
+      </div>
+
+      <div class="priority-item">
+        <div class="pi-city">London · Jun 5–10</div>
+        <span class="pi-sport golf">Golf</span>
+        <div class="pi-name">Titleist UK / Acushnet Europe Ltd</div>
+        <div class="pi-addr">Caxton Road, St. Ives, Cambridgeshire PE27 3LU</div>
+        <a class="pi-maps" href="https://www.google.com/maps/search/?api=1&query=Acushnet+Europe+Ltd+Caxton+Road+St+Ives+Cambridgeshire+PE27+3LU" target="_blank">📍 Open in Maps</a>
+      </div>
+
+      <div class="priority-item">
+        <div class="pi-city">London · Jun 5–10</div>
+        <span class="pi-sport golf">Golf</span>
+        <div class="pi-name">PING Europe Ltd</div>
+        <div class="pi-addr">Corringham Road Industrial Estate, Gainsborough, Lincolnshire DN21 1QB</div>
+        <a class="pi-maps" href="https://www.google.com/maps/search/?api=1&query=PING+Europe+Ltd+Corringham+Road+Gainsborough+Lincolnshire+DN21+1QB" target="_blank">📍 Open in Maps</a>
       </div>
 
       <div class="priority-item">
@@ -589,6 +624,57 @@ body{padding-left:4px}
     <div class="sport-header"><div class="sport-dot golf"></div><div class="sport-label golf">Golf</div></div>
     <div class="store-card priority">
       <div class="card-top">
+        <div class="card-row1"><div class="store-name">Callaway Golf Europe</div><span class="priority-badge">PRIORITY</span></div>
+        <div class="store-address">Unit A27, Barwell Business Park, Leatherhead Road, Chessington, Surrey KT9 2NY</div>
+        <div class="store-phone">+44 (0)20 8391 0111</div>
+      </div>
+      <div class="card-notes priority-notes">Callaway Golf's European HQ and UK office. Brand-level meeting requires prior appointment.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=Callaway+Golf+Europe+Chessington+Surrey+KT9+2NY" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+
+    <div class="store-card priority">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">PXG London South (Parsons Xtreme Golf)</div><span class="priority-badge">PRIORITY</span></div>
+        <div class="store-address">Unit 1A, Sandown Industrial Park, Mill Road, Esher, Surrey KT10 8BL</div>
+        <div class="store-phone">+44 (0)1372 898700</div>
+      </div>
+      <div class="card-notes priority-notes">PXG's UK flagship store, fitting centre and commercial office. The only PXG physical location in the UK.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=PXG+London+South+Unit+1A+Sandown+Industrial+Park+Esher+Surrey+KT10+8BL" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+
+    <div class="store-card priority">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">Titleist UK / Acushnet Europe Ltd</div><span class="priority-badge">PRIORITY</span></div>
+        <div class="store-address">Caxton Road, St. Ives, Cambridgeshire PE27 3LU</div>
+        <div class="store-phone">+44 (0)1480 301114</div>
+      </div>
+      <div class="card-notes priority-notes">Titleist's European headquarters. Brand-level meeting requires prior appointment.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=Acushnet+Europe+Ltd+Caxton+Road+St+Ives+Cambridgeshire+PE27+3LU" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+
+    <div class="store-card priority">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">PING Europe Ltd</div><span class="priority-badge">PRIORITY</span></div>
+        <div class="store-address">Corringham Road Industrial Estate, Gainsborough, Lincolnshire DN21 1QB</div>
+      </div>
+      <div class="card-notes priority-notes">PING's European headquarters. Brand-level meeting requires prior appointment.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=PING+Europe+Ltd+Corringham+Road+Gainsborough+Lincolnshire+DN21+1QB" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+
+    <div class="store-card priority">
+      <div class="card-top">
         <div class="card-row1"><div class="store-name">Capital Golf London</div><span class="priority-badge">PRIORITY</span></div>
         <div class="store-address">14 John Prince's St, London W1G 0JS</div>
       </div>
@@ -688,6 +774,43 @@ body{padding-left:4px}
       <div class="card-notes">Large multi-sport retailer with a solid squash range at competitive price points. Useful for understanding the value-tier market. Brands: Head, Wilson, Dunlop, Artengo.</div>
       <div class="card-actions">
         <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=Decathlon+176+Kensington+High+Street+London+W8+7RG" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sport-group">
+    <div class="sport-header misc"><div class="sport-dot misc"></div><div class="sport-label misc">Additional Golf Industry Meetings Worth Considering</div></div>
+    <div class="store-card">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">TaylorMade Golf Europe</div></div>
+        <div class="store-address">Unit 27, Barwell Business Park, Leatherhead Road, Chessington, Surrey KT9 2NY</div>
+      </div>
+      <div class="card-notes">TaylorMade's European office. Worth contacting in advance to arrange a brand meeting during your London visit.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=TaylorMade+Golf+Europe+Unit+27+Barwell+Business+Park+Chessington+Surrey+KT9+2NY" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+    <div class="store-card">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">Cobra Puma Golf UK</div></div>
+        <div class="store-address">Puma House, Central Boulevard, Prologis Park, Coventry CV6 4BX</div>
+      </div>
+      <div class="card-notes">Cobra Puma Golf's UK office. Note: Located in Coventry — approximately 1 hour from central London. Worth a visit if schedule allows or contact can be arranged remotely.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=Cobra+Puma+Golf+Puma+House+Central+Boulevard+Prologis+Park+Coventry+CV6+4BX" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+    <div class="store-card">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">American Golf HQ</div></div>
+        <div class="store-address">Herons Way, Chester Business Park, Chester CH4 9QR</div>
+      </div>
+      <div class="card-notes">American Golf's UK head office. Note: Located in Chester — approximately 3 hours from London. Better approached as a brand contact rather than an in-person visit during this trip.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=American+Golf+Herons+Way+Chester+Business+Park+Chester+CH4+9QR" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
         <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
       </div>
     </div>
