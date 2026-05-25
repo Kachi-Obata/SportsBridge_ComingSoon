@@ -760,10 +760,27 @@ function showCity(id) {
   tabs[map[id]].classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
 }
-function toggleVisit(btn) {
-  btn.classList.toggle('done');
-  btn.querySelector('svg').style.stroke = btn.classList.contains('done') ? '#2e7d32' : 'currentColor';
+function getCardKey(btn) {
+  return 'visit_' + btn.closest('.store-card').querySelector('.store-name').textContent.trim();
 }
+function setVisitState(btn, done) {
+  btn.classList.toggle('done', done);
+  btn.querySelector('svg').style.stroke = done ? '#2e7d32' : 'currentColor';
+}
+function toggleVisit(btn) {
+  const done = !btn.classList.contains('done');
+  const key = getCardKey(btn);
+  done ? localStorage.setItem(key, '1') : localStorage.removeItem(key);
+  // update every button for this same store across all sport sections
+  document.querySelectorAll('.visit-toggle').forEach(b => {
+    if (getCardKey(b) === key) setVisitState(b, done);
+  });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.visit-toggle').forEach(btn => {
+    if (localStorage.getItem(getCardKey(btn)) === '1') setVisitState(btn, true);
+  });
+});
 function toggleNote(el) {
   el.parentElement.classList.toggle('open');
 }
