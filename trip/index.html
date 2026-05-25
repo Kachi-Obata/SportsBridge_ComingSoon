@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sports Bridge — Trip Planner 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --teal:#1D9E75;
+  --teal-dark:#155f47;
+  --pink:#D4537E;
+  --golf:#1B5E20;
+  --tennis:#0D47A1;
+  --badminton:#4A148C;
+  --squash:#BF360C;
+  --dark:#030303;
+  --card:#ffffff;
+  --bg:#f2f0ed;
+  --text:#111111;
+  --muted:#777777;
+  --border:#e0e0e0;
+  --priority:#D4537E;
+  --note-bg:#edf7f2;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.5}
+
+/* ── HEADER ── */
+.site-header{background:var(--dark);padding:20px 20px 0;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.4)}
+.header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.site-logo{height:36px;width:auto;display:block}
+.trip-tag{font-family:"Barlow Condensed",sans-serif;font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.4)}
+.city-tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-bottom:1px}
+.city-tabs::-webkit-scrollbar{display:none}
+.tab{padding:10px 16px;font-family:"Barlow Condensed",sans-serif;font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.5);border:none;background:transparent;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all .2s}
+.tab.active{color:#fff;border-bottom-color:var(--teal)}
+.tab:hover{color:rgba(255,255,255,.8)}
+
+/* ── CITY SECTIONS ── */
+.city-section{display:none;animation:fadeIn .25s ease}
+.city-section.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+.city-hero{background:var(--dark);padding:20px 20px 24px;border-bottom:3px solid var(--teal)}
+.city-name{font-family:"Barlow Condensed",sans-serif;font-size:36px;font-weight:900;color:#fff;text-transform:uppercase;line-height:.95;letter-spacing:-1px}
+.city-dates{font-family:"Barlow Condensed",sans-serif;font-size:13px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-top:4px}
+.city-note{font-size:13px;color:rgba(255,255,255,.55);margin-top:10px;line-height:1.6;max-width:500px}
+
+/* ── BRANDS BAR ── */
+.brands-bar{background:#f5f5f3;padding:12px 20px;display:flex;flex-wrap:wrap;gap:8px;border-bottom:1px solid #e0e0e0}
+.brand-group{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.brand-sport{font-family:"Barlow Condensed",sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:2px 7px;border-radius:2px;color:#fff;white-space:nowrap}
+.brand-sport.golf{background:var(--golf)}
+.brand-sport.tennis{background:var(--tennis)}
+.brand-sport.badminton{background:var(--badminton)}
+.brand-sport.squash{background:var(--squash)}
+.brand-list{font-size:12px;color:#777}
+
+/* ── SPORT GROUP ── */
+.sport-group{padding:0 16px;margin-top:20px}
+.sport-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #1D9E75}
+.sport-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.sport-dot.golf{background:var(--golf)}
+.sport-dot.tennis{background:var(--tennis)}
+.sport-dot.badminton{background:var(--badminton)}
+.sport-dot.squash{background:var(--squash)}
+.sport-label{font-family:"Barlow Condensed",sans-serif;font-size:18px;font-weight:800;text-transform:uppercase;letter-spacing:1px}
+.sport-label.golf{color:var(--golf)}
+.sport-label.tennis{color:var(--tennis)}
+.sport-label.badminton{color:var(--badminton)}
+.sport-label.squash{color:var(--squash)}
+
+/* ── STORE CARD ── */
+.store-card{background:var(--card);border-radius:0;margin-bottom:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06);border:1px solid #e0e0e0}
+.store-card.priority{border-left:1px solid #e0e0e0}
+.card-top{padding:14px 14px 10px}
+.card-row1{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:4px}
+.store-name{font-weight:700;font-size:15px;line-height:1.3;flex:1;color:var(--text)}
+.priority-badge{font-family:"Barlow Condensed",sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#fff;background:var(--teal);padding:2px 7px;border-radius:2px;white-space:nowrap;flex-shrink:0}
+.store-address{font-size:13px;color:#666;margin-bottom:2px}
+.store-phone{font-size:13px;color:#666}
+.card-notes{padding:10px 14px;background:#edf7f2;border-top:1px solid #e0e0e0;font-size:13px;color:#3a5c4e;line-height:1.6}
+.card-notes.priority-notes{background:#fdf0f4;color:var(--pink)}
+.card-actions{padding:10px 14px;display:flex;gap:8px;border-top:1px solid #e0e0e0;background:#f9f9f7}
+.btn-maps{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;background:var(--teal);color:#fff;clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px));font-family:"Barlow Condensed",sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none;flex:1;justify-content:center}
+.btn-maps:active{background:var(--teal-dark)}
+.pin-icon{font-size:14px}
+.visit-toggle{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;background:#e8e6e3;color:#777;clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px));font-family:"Barlow Condensed",sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;cursor:pointer;transition:all .15s}
+.visit-toggle.done{background:#d0f0e4;color:var(--teal)}
+.visit-toggle svg{width:14px;height:14px;flex-shrink:0}
+
+/* ── NOTES SECTION ── */
+.notes-section{margin:24px 16px 32px;background:var(--card);border-radius:0;overflow:hidden;border:1px solid #e0e0e0;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.notes-header{background:var(--dark);padding:14px 16px;font-family:"Barlow Condensed",sans-serif;font-size:15px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#fff}
+.note-item{border-bottom:1px solid #e8e6e3}
+.note-item:last-child{border-bottom:none}
+.note-q{padding:12px 16px;font-weight:600;font-size:14px;color:var(--text);background:#f5f4f1;display:flex;align-items:flex-start;gap:8px;cursor:pointer}
+.note-q::before{content:"▸";color:var(--teal);font-size:13px;flex-shrink:0;margin-top:1px;transition:transform .2s}
+.note-item.open .note-q::before{transform:rotate(90deg)}
+.note-body{display:none;padding:12px 16px;font-size:13px;color:#555;line-height:1.7;background:var(--card)}
+.note-item.open .note-body{display:block}
+
+/* ── OVERVIEW TAB ── */
+.overview-content{padding:16px}
+.ov-intro{background:var(--dark);border-radius:0;padding:20px;margin-bottom:20px}
+.ov-intro h2{font-family:"Barlow Condensed",sans-serif;font-size:28px;font-weight:900;color:#fff;text-transform:uppercase;letter-spacing:-0.5px;margin-bottom:4px}
+.ov-intro p{font-size:13px;color:rgba(255,255,255,.55);line-height:1.6}
+.ov-intro .route{font-family:"Barlow Condensed",sans-serif;font-size:14px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--teal);margin:10px 0 4px}
+.how-to{background:#edf7f2;border-radius:0;padding:14px;margin-bottom:20px;font-size:13px;color:#3a5c4e;line-height:1.7;border-left:4px solid var(--teal)}
+.how-to strong{color:#111}
+.priority-list{margin-bottom:8px}
+.priority-list h3{font-family:"Barlow Condensed",sans-serif;font-size:16px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#333;margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid #1D9E75}
+.priority-item{background:var(--card);border-radius:0;padding:12px 14px;margin-bottom:8px;border:1px solid #e0e0e0}
+.pi-city{font-family:"Barlow Condensed",sans-serif;font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:#666;margin-bottom:2px}
+.pi-name{font-weight:700;font-size:14px;color:var(--text);margin-bottom:2px}
+.pi-sport{display:inline-block;font-family:"Barlow Condensed",sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:1px 7px;border-radius:2px;color:#fff;margin-bottom:6px}
+.pi-sport.golf{background:var(--golf)}
+.pi-sport.tennis{background:var(--tennis)}
+.pi-sport.badminton{background:var(--badminton)}
+.pi-sport.squash{background:var(--squash)}
+.pi-sport.conf{background:#555}
+.pi-addr{font-size:12px;color:#666;margin-bottom:8px}
+.pi-maps{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;background:var(--teal);color:#fff;clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px));font-family:"Barlow Condensed",sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none}
+
+@media(max-width:400px){
+  .city-name{font-size:28px}
+  .store-name{font-size:14px}
+}
+.left-accent{position:fixed;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,#1D9E75 0%,#D4537E 100%);z-index:999;pointer-events:none}
+body{padding-left:4px}
+</style>
+</head>
+<body>
+
+<div class="left-accent"></div>
+<header class="site-header">
+  <div class="header-top">
+    <img src="../images/SportsBridge_logo.png" alt="Sports Bridge International" class="site-logo"/>
+    <div class="trip-tag">Trip Planner 2026</div>
+  </div>
+  <div class="city-tabs">
+    <button class="tab active" onclick="showCity('overview')">Overview</button>
+    <button class="tab" onclick="showCity('ny')">New York</button>
+    <button class="tab" onclick="showCity('atl')">Atlanta</button>
+    <button class="tab" onclick="showCity('lon')">London</button>
+    <button class="tab" onclick="showCity('notes')">Key Notes</button>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════════════════════
+     OVERVIEW
+═══════════════════════════════════════════════════════════ -->
+<div id="overview" class="city-section active">
+  <div class="overview-content">
+    <div class="ov-intro">
+      <h2>Trip Planner</h2>
+      <div class="route">New York → Atlanta → London</div>
+      <p>Retail and brand visits across Golf, Lawn Tennis, Badminton and Squash. May 25 – June 11, 2026.</p>
+    </div>
+    <div class="how-to">
+      I gave each city its own tab at the top. Priority visits are marked with a <strong>PRIORITY</strong> badge — those are the most important stops in each city. I added a Google Maps link for every location so it opens the app directly on your phone when you need it. You can use the <strong>Key Notes</strong> tab for context I thought may be worth noting before you get on the road.
+    </div>
+
+    <div class="priority-list">
+      <h3>All Priority Visits</h3>
+
+      <div class="priority-item">
+        <div class="pi-city">New York · May 25–28</div>
+        <span class="pi-sport golf">Golf</span>
+        <div class="pi-name">New York Golf Center</div>
+        <div class="pi-addr">131 W 35th St, New York, NY 10001</div>
+        <a class="pi-maps" href="https://www.google.com/maps/search/?api=1&query=New+York+Golf+Center+131+W+35th+St+New+York+NY+10001" target="_blank">📍 Open in Maps</a>
+      </div>
+
+      <div class="priority-item">
+        <div class="pi-city">New York · May 25–28</div>
+        <span class="pi-sport golf">Golf</span>
+        <div class="pi-name">PGA TOUR Superstore — Westbury, Long Island</div>
+        <div class="pi-addr">1504 Old Country Rd, Westbury, NY 11590</div>
+        <a class="pi-maps" href="https://www.google.com/maps/search/?api=1&query=PGA+Tour+Superstore+1504+Old+Country+Rd+Westbury+NY+11590" target="_blank">📍 Open in Maps</a>
+      </div>
+
+      <div class="priority-item">
+        <div class="pi-city">New York · May 25–28</div>
+        <span class="pi-sport tennis">Lawn Tennis</span>
+        <div class="pi-name">Wilson Sporting Goods — NYC Flagship</div>
+        <div class="pi-addr">594 Broadway, SoHo, New York, NY 10012</div>
+        <a class="pi-maps" href="https://www.google.com/maps/search/?api=1&query=Wilson+Sporting+Goods+Flagship+594+Broadway+SoHo+New+York+NY+10012" target="_blank">📍 Open in Maps</a>
+      </div>
+
+      <div class="priority-item">
+        <div class="pi-city">New York · May 25–28</div>
+        <span class="pi-sport tennis">Tennis</span> <span class="pi-sport badminton">Badminton</span> <span class="pi-sport squash">Squash</span>
+        <div class="pi-name">NYC Racquet Sports — Herald Square</div>
+        <div class="pi-addr">157A W 35th St, New York, NY 10001</div>
+        <a class="pi-maps" href="https://www.google.com/maps/search/?api=1&query=NYC+Racquet+Sports+157A+W+35th+St+New+York+NY+10001" target="_blank">📍 Open in Maps</a>
+      </div>
+
+      <div class="priority-item">
+        <div class="pi-city">New York · May 29–30</div>
+        <span class="pi-sport conf">Conference</span>
+        <div class="pi-name">International Franchise Expo (IFE) 2026</div>
+        <div class="pi-addr">Javits Center — Hall 1C, New York, NY</div>
+        <a class="pi-maps" href="https://www.google.com/maps/search/?api=1&query=Javits+Center+429+11th+Ave+New+York+NY+10001" target="_blank">📍 Open in Maps</a>
+      </div>
+
+      <div class="priority-item">
+        <div class="pi-city">Atlanta · Jun 1–3</div>
+        <span class="pi-sport golf">Golf</span>
+        <div class="pi-name">PGA TOUR Superstore — Buckhead (Opened Mar 2026)</div>
+        <div class="pi-addr">3255 Peachtree Rd NE, Atlanta, GA 30305</div>
+        <a class="pi-maps" href="https://www.google.com/maps/search/?api=1&query=PGA+Tour+Superstore+3255+Peachtree+Rd+NE+Atlanta+GA+30305" target="_blank">📍 Open in Maps</a>
+      </div>
+
+      <div class="priority-item">
+        <div class="pi-city">Atlanta · Jun 1–3</div>
+        <span class="pi-sport tennis">Tennis</span> <span class="pi-sport squash">Squash</span>
+        <div class="pi-name">Your Serve Tennis — Buckhead</div>
+        <div class="pi-addr">3749 Roswell Rd, Just North of Piedmont, Atlanta, GA</div>
+        <a class="pi-maps" href="https://www.google.com/maps/search/?api=1&query=Your+Serve+Tennis+3749+Roswell+Road+Atlanta+GA+30305" target="_blank">📍 Open in Maps</a>
+      </div>
+
+      <div class="priority-item">
+        <div class="pi-city">Atlanta · Jun 1–3</div>
+        <span class="pi-sport tennis">Tennis</span> <span class="pi-sport badminton">Badminton</span>
+        <div class="pi-name">Tennis Warehouse — Dunwoody</div>
+        <div class="pi-addr">4500 Olde Perimeter Way, Suite 100, Dunwoody, GA 30346</div>
+        <a class="pi-maps" href="https://www.google.com/maps/search/?api=1&query=Tennis+Warehouse+4500+Olde+Perimeter+Way+Dunwoody+GA+30346" target="_blank">📍 Open in Maps</a>
+      </div>
+
+      <div class="priority-item">
+        <div class="pi-city">London · Jun 5–10</div>
+        <span class="pi-sport golf">Golf</span>
+        <div class="pi-name">Capital Golf London</div>
+        <div class="pi-addr">14 John Prince's St, London W1G 0JS</div>
+        <a class="pi-maps" href="https://www.google.com/maps/search/?api=1&query=Capital+Golf+14+John+Princes+Street+London+W1G+0JS" target="_blank">📍 Open in Maps</a>
+      </div>
+
+      <div class="priority-item">
+        <div class="pi-city">London · Jun 5–10</div>
+        <span class="pi-sport golf">Golf</span>
+        <div class="pi-name">American Golf — Monument (Europe's #1 Golf Retailer)</div>
+        <div class="pi-addr">30 Fish Street Hill, Monument, London EC3R 6DN</div>
+        <a class="pi-maps" href="https://www.google.com/maps/search/?api=1&query=American+Golf+30+Fish+Street+Hill+Monument+London+EC3R+6DN" target="_blank">📍 Open in Maps</a>
+      </div>
+
+      <div class="priority-item">
+        <div class="pi-city">London · Jun 5–10</div>
+        <span class="pi-sport tennis">Tennis</span> <span class="pi-sport badminton">Badminton</span> <span class="pi-sport squash">Squash</span>
+        <div class="pi-name">Wigmore Sports — Marylebone</div>
+        <div class="pi-addr">39 Wigmore St, Marylebone, London W1U 1PD</div>
+        <a class="pi-maps" href="https://www.google.com/maps/search/?api=1&query=Wigmore+Sports+39+Wigmore+Street+Marylebone+London+W1U+1PD" target="_blank">📍 Open in Maps</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     NEW YORK
+═══════════════════════════════════════════════════════════ -->
+<div id="ny" class="city-section">
+  <div class="city-hero">
+    <div class="city-name">New York</div>
+    <div class="city-dates">25–30 May 2026</div>
+    <div class="city-note">Golf visits already confirmed. Priority for remaining days: Lawn Tennis, Badminton, and Squash — all top stores are in Manhattan.</div>
+  </div>
+  <div class="brands-bar">
+    <div class="brand-group"><span class="brand-sport golf">Golf</span><span class="brand-list">Callaway · TaylorMade · PING · Titleist (by appointment)</span></div>
+    <div class="brand-group"><span class="brand-sport tennis">Tennis</span><span class="brand-list">Wilson · Babolat · Head · Tecnifibre · Dunlop · Yonex</span></div>
+    <div class="brand-group"><span class="brand-sport badminton">Badminton</span><span class="brand-list">Yonex · Victor</span></div>
+    <div class="brand-group"><span class="brand-sport squash">Squash</span><span class="brand-list">Head · Dunlop · Tecnifibre · Wilson</span></div>
+  </div>
+
+  <div class="sport-group">
+    <div class="sport-header"><div class="sport-dot golf"></div><div class="sport-label golf">Golf</div></div>
+    
+    <div class="store-card priority">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">New York Golf Center</div><span class="priority-badge">CONFIRMED</span></div>
+        <div class="store-address">131 W 35th St, New York, NY 10001</div>
+        <div class="store-phone">+1 212-564-2255</div>
+      </div>
+      <div class="card-notes priority-notes">Already on your confirmed list.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=New+York+Golf+Center+131+W+35th+St+New+York+NY+10001" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+
+    <div class="store-card priority">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">Sportiva Golf Outlet NYC</div><span class="priority-badge">CONFIRMED</span></div>
+        <div class="store-address">54 W 21st St, New York, NY 10010</div>
+        <div class="store-phone">+1 212-929-4797</div>
+      </div>
+      <div class="card-notes priority-notes">Already on your confirmed list.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=Sportiva+Golf+Outlet+54+W+21st+St+New+York+NY+10010" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+
+    <div class="store-card priority">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">PGA TOUR Superstore — Westbury, Long Island</div><span class="priority-badge">CONFIRMED</span></div>
+        <div class="store-address">1504 Old Country Rd, Westbury, NY 11590</div>
+        <div class="store-phone">+1 516-336-6400</div>
+      </div>
+      <div class="card-notes priority-notes">Already on your confirmed list.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=PGA+Tour+Superstore+1504+Old+Country+Rd+Westbury+NY+11590" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sport-group">
+    <div class="sport-header"><div class="sport-dot tennis"></div><div class="sport-label tennis">Lawn Tennis</div></div>
+
+    <div class="store-card priority">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">Wilson Sporting Goods — NYC Flagship</div><span class="priority-badge">PRIORITY</span></div>
+        <div class="store-address">594 Broadway, SoHo, New York, NY 10012</div>
+      </div>
+      <div class="card-notes priority-notes">Wilson's only flagship store in New York City. 3-floor immersive space with indoor play area, full tennis racket range, customisation services, and exclusive products not available anywhere else. Brands: Wilson.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=Wilson+Sporting+Goods+Flagship+594+Broadway+SoHo+New+York+NY+10012" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+
+    <div class="store-card priority">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">NYC Racquet Sports — Herald Square</div><span class="priority-badge">PRIORITY</span></div>
+        <div class="store-address">157A W 35th St, New York, NY 10001</div>
+        <div class="store-phone">+1 212-695-5353</div>
+      </div>
+      <div class="card-notes priority-notes">NYC's #1 rated racquet sports store on Yelp and Google. One visit covers Tennis, Badminton AND Squash. Same street as New York Golf Center — combine both in one trip. Brands: Babolat, Wilson, Head, Tecnifibre, Dunlop, Yonex, Victor.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=NYC+Racquet+Sports+157A+W+35th+St+New+York+NY+10001" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+
+    <div class="store-card">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">NYC Racquet Sports — Grand Central</div></div>
+        <div class="store-address">Grand Central Terminal, 89 E 42nd St, New York, NY 10017</div>
+      </div>
+      <div class="card-notes">Second NYC Racquet Sports location inside Grand Central Terminal. Same-day stringing. Alternative if Herald Square is not accessible on a given day.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=Grand+Central+Racquet+89+E+42nd+St+New+York+NY+10017" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+
+    <div class="store-card">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">Mason's Tennis</div></div>
+        <div class="store-address">56 E 53rd St, New York, NY 10022</div>
+        <div class="store-phone">+1 212-755-5805</div>
+      </div>
+      <div class="card-notes">Described as "New York's finest tennis shop." Midtown Manhattan. Brands: Yonex, Babolat, Wilson, Head, Nike, Adidas.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=Masons+Tennis+56+E+53rd+St+New+York+NY+10022" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sport-group">
+    <div class="sport-header"><div class="sport-dot badminton"></div><div class="sport-label badminton">Badminton</div></div>
+    <div class="store-card priority">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">NYC Racquet Sports — Herald Square</div><span class="priority-badge">PRIORITY</span></div>
+        <div class="store-address">157A W 35th St, New York, NY 10001</div>
+        <div class="store-phone">+1 212-695-5353</div>
+      </div>
+      <div class="card-notes priority-notes">Best badminton retailer in NYC. Same visit as Tennis and Squash priorities — one stop covers all three racket sports. Brands: Yonex, Victor.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=NYC+Racquet+Sports+157A+W+35th+St+New+York+NY+10001" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sport-group">
+    <div class="sport-header"><div class="sport-dot squash"></div><div class="sport-label squash">Squash</div></div>
+    <div class="store-card priority">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">NYC Racquet Sports — Herald Square</div><span class="priority-badge">PRIORITY</span></div>
+        <div class="store-address">157A W 35th St, New York, NY 10001</div>
+        <div class="store-phone">+1 212-695-5353</div>
+      </div>
+      <div class="card-notes priority-notes">Best squash retailer in NYC. Same visit as Tennis and Badminton priorities. Brands: Head, Dunlop, Tecnifibre, Wilson.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=NYC+Racquet+Sports+157A+W+35th+St+New+York+NY+10001" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+    <div class="store-card">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">RPNY Racquet Sports</div></div>
+        <div class="store-address">353 W 48th St, New York, NY 10036</div>
+        <div class="store-phone">+1 212-307-7600</div>
+      </div>
+      <div class="card-notes">Premium squash pro shop run by world-renowned stringer Roman Prokes. Squash rackets, shoes, protective eyewear, apparel.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=RPNY+Racquet+Sports+353+W+48th+St+New+York+NY+10036" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+  </div>
+  <div style="height:24px"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     ATLANTA
+═══════════════════════════════════════════════════════════ -->
+<div id="atl" class="city-section">
+  <div class="city-hero">
+    <div class="city-name">Atlanta</div>
+    <div class="city-dates">Arrive 31 May · Visits 1–3 June 2026</div>
+    <div class="city-note">Retail and brand visits across all four sports from 1st–3rd June.</div>
+  </div>
+  <div class="brands-bar">
+    <div class="brand-group"><span class="brand-sport golf">Golf</span><span class="brand-list">Callaway · TaylorMade · Titleist · PING · Srixon · Mizuno</span></div>
+    <div class="brand-group"><span class="brand-sport tennis">Tennis</span><span class="brand-list">Babolat · Wilson · Head · Tecnifibre · Dunlop · Yonex · Prince</span></div>
+    <div class="brand-group"><span class="brand-sport badminton">Badminton</span><span class="brand-list">Yonex · Victor · Carlton</span></div>
+    <div class="brand-group"><span class="brand-sport squash">Squash</span><span class="brand-list">Head · Dunlop · Tecnifibre · Wilson · Karakal</span></div>
+  </div>
+
+  <div class="sport-group">
+    <div class="sport-header"><div class="sport-dot golf"></div><div class="sport-label golf">Golf</div></div>
+    <div class="store-card priority">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">PGA TOUR Superstore — Buckhead</div><span class="priority-badge">PRIORITY</span></div>
+        <div class="store-address">3255 Peachtree Rd NE, Buckhead Square, Atlanta, GA 30305</div>
+      </div>
+      <div class="card-notes priority-notes">Opened March 7, 2026 — brand new. Atlanta is PGA TOUR Superstore's home city (their HQ is in Roswell, metro Atlanta). 30,000 sq ft with TrackMan fitting bays, a 900 sq ft putting green, 65,000+ club and shaft combinations, and certified teaching pros. One of the most advanced golf retail experiences in the US.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=PGA+Tour+Superstore+3255+Peachtree+Rd+NE+Atlanta+GA+30305" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+    <div class="store-card">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">PGA TOUR Superstore — Roswell</div></div>
+        <div class="store-address">10800 Alpharetta Hwy, Roswell, GA 30076</div>
+        <div class="store-phone">+1 770-642-7990</div>
+      </div>
+      <div class="card-notes">Original Atlanta-area PGA TOUR Superstore. Worth visiting if you want to compare with the new Buckhead flagship.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=PGA+Tour+Superstore+10800+Alpharetta+Hwy+Roswell+GA+30076" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sport-group">
+    <div class="sport-header"><div class="sport-dot tennis"></div><div class="sport-label tennis">Lawn Tennis</div></div>
+    <div class="store-card priority">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">Your Serve Tennis — Buckhead</div><span class="priority-badge">PRIORITY</span></div>
+        <div class="store-address">3749 Roswell Rd, Just North of Piedmont, Atlanta, GA 30305</div>
+        <div class="store-phone">+1 404-812-1505</div>
+      </div>
+      <div class="card-notes priority-notes">Atlanta's original tennis specialty retailer since 1976. Named Pro/Specialty Retailer of the Year 3 times (2001, 2014, 2023). 10 locations across metro Atlanta. The Buckhead location is closest to PGA Superstore Buckhead — combine both visits in one trip.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=Your+Serve+Tennis+3749+Roswell+Road+Atlanta+GA+30305" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+    <div class="store-card priority">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">Tennis Warehouse — Dunwoody</div><span class="priority-badge">PRIORITY</span></div>
+        <div class="store-address">4500 Olde Perimeter Way, Suite 100, Dunwoody, GA 30346</div>
+        <div class="store-phone">+1 470-415-6365</div>
+      </div>
+      <div class="card-notes priority-notes">The world's largest online tennis retailer, now with a physical Atlanta store. Also covers Badminton brands. Mon–Sat 10am–6pm, Sun 12pm–6pm. Brands: Babolat, Wilson, Head, Tecnifibre, Dunlop, Yonex, Prince.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=Tennis+Warehouse+4500+Olde+Perimeter+Way+Dunwoody+GA+30346" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+    <div class="store-card">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">Your Serve Tennis — East Cobb</div></div>
+        <div class="store-address">1205 Johnson Ferry Rd, Woodlawn Square, Woodlawn, GA</div>
+        <div class="store-phone">+1 770-977-1513</div>
+      </div>
+      <div class="card-notes">Additional Your Serve Tennis location for reference.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=Your+Serve+Tennis+1205+Johnson+Ferry+Rd+East+Cobb+GA" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+    <div class="store-card">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">Your Serve Tennis — Sandy Springs</div></div>
+        <div class="store-address">500 Abernathy Rd, Sandy Springs Tennis Center, Sandy Springs, GA</div>
+        <div class="store-phone">+1 404-255-6006</div>
+      </div>
+      <div class="card-notes">Additional Your Serve Tennis location for reference.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=Your+Serve+Tennis+500+Abernathy+Rd+Sandy+Springs+GA" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+    <div class="store-card">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">Serious Tennis</div></div>
+        <div class="store-address">3017 N Druid Hills Rd NE, Atlanta, GA 30329</div>
+      </div>
+      <div class="card-notes">Near Emory University. Open 7 days a week. Full tennis range with stringing and demos.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=Serious+Tennis+3017+N+Druid+Hills+Rd+NE+Atlanta+GA+30329" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sport-group">
+    <div class="sport-header"><div class="sport-dot badminton"></div><div class="sport-label badminton">Badminton</div></div>
+    <div class="store-card priority">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">Tennis Warehouse — Dunwoody</div><span class="priority-badge">PRIORITY</span></div>
+        <div class="store-address">4500 Olde Perimeter Way, Suite 100, Dunwoody, GA 30346</div>
+        <div class="store-phone">+1 470-415-6365</div>
+      </div>
+      <div class="card-notes priority-notes">Best badminton retailer in Atlanta. Same visit as Lawn Tennis priority above. Brands: Yonex, Victor, Carlton.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=Tennis+Warehouse+4500+Olde+Perimeter+Way+Dunwoody+GA+30346" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sport-group">
+    <div class="sport-header"><div class="sport-dot squash"></div><div class="sport-label squash">Squash</div></div>
+    <div class="store-card priority">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">Your Serve Tennis — Buckhead</div><span class="priority-badge">PRIORITY</span></div>
+        <div class="store-address">3749 Roswell Rd, Just North of Piedmont, Atlanta, GA 30305</div>
+        <div class="store-phone">+1 404-812-1505</div>
+      </div>
+      <div class="card-notes priority-notes">Atlanta's top racket sports retailer also carries squash equipment. Same visit as Lawn Tennis priority above. Brands: Head, Dunlop, Tecnifibre, Wilson, Karakal.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=Your+Serve+Tennis+3749+Roswell+Road+Atlanta+GA+30305" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+    <div class="store-card">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">Serious Tennis</div></div>
+        <div class="store-address">3017 N Druid Hills Rd NE, Atlanta, GA 30329</div>
+      </div>
+      <div class="card-notes">Also carries squash rackets. Alternative or additional stop.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=Serious+Tennis+3017+N+Druid+Hills+Rd+NE+Atlanta+GA+30329" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+  </div>
+  <div style="height:24px"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     LONDON
+═══════════════════════════════════════════════════════════ -->
+<div id="lon" class="city-section">
+  <div class="city-hero">
+    <div class="city-name">London</div>
+    <div class="city-dates">Arrive 4 June · Visits 5–10 June 2026</div>
+    <div class="city-note">London has dedicated flagship stores for both golf and racket sports. Wigmore Sports in Marylebone is the standout priority — one visit covers Tennis, Badminton AND Squash.</div>
+  </div>
+  <div class="brands-bar">
+    <div class="brand-group"><span class="brand-sport golf">Golf</span><span class="brand-list">Callaway · TaylorMade · Titleist · PING · Srixon · Mizuno · G/FORE · Malbon</span></div>
+    <div class="brand-group"><span class="brand-sport tennis">Tennis</span><span class="brand-list">Babolat · Wilson · Head · Tecnifibre · Dunlop · Yonex · Adidas · Asics</span></div>
+    <div class="brand-group"><span class="brand-sport badminton">Badminton</span><span class="brand-list">Yonex · Li-Ning · Victor · Ashaway · Babolat · Karakal</span></div>
+    <div class="brand-group"><span class="brand-sport squash">Squash</span><span class="brand-list">Head · Dunlop · Tecnifibre · Karakal · Wilson</span></div>
+  </div>
+
+  <div class="sport-group">
+    <div class="sport-header"><div class="sport-dot golf"></div><div class="sport-label golf">Golf</div></div>
+    <div class="store-card priority">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">Capital Golf London</div><span class="priority-badge">PRIORITY</span></div>
+        <div class="store-address">14 John Prince's St, London W1G 0JS</div>
+      </div>
+      <div class="card-notes priority-notes">Premium central London golf store, walking distance from Oxford Street. Stocks Callaway, TaylorMade, Titleist, PING, Srixon, Mizuno. Custom club fitting available.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=Capital+Golf+14+John+Princes+Street+London+W1G+0JS" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+    <div class="store-card priority">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">American Golf — Monument</div><span class="priority-badge">PRIORITY</span></div>
+        <div class="store-address">30 Fish Street Hill, Monument, London EC3R 6DN</div>
+      </div>
+      <div class="card-notes priority-notes">Europe's #1 golf retailer. City of London flagship. Stocks PING, Titleist, TaylorMade, Callaway, Garmin. PGA Pro on-site for custom fitting. Free home and office delivery.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=American+Golf+30+Fish+Street+Hill+Monument+London+EC3R+6DN" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+    <div class="store-card">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">TrendyGolf — Canary Wharf</div></div>
+        <div class="store-address">30 Churchill Place, London E14 5RE</div>
+        <div class="store-phone">+44 7706 333 483</div>
+      </div>
+      <div class="card-notes">Premium golf apparel boutique inside PITCH, London's golf entertainment venue. Stocks G/FORE, Malbon, Ralph Lauren RLX, J.Lindeberg, FootJoy. 55 premium shoe styles. Good for premium apparel brands.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=TrendyGolf+30+Churchill+Place+London+E14+5RE" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sport-group">
+    <div class="sport-header"><div class="sport-dot tennis"></div><div class="sport-label tennis">Lawn Tennis</div></div>
+    <div class="store-card priority">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">Wigmore Sports</div><span class="priority-badge">PRIORITY</span></div>
+        <div class="store-address">39 Wigmore St, Marylebone, London W1U 1PD</div>
+        <div class="store-phone">+44 20 7486 7761</div>
+      </div>
+      <div class="card-notes priority-notes">London's premier racket sports store. Over 2,000 rackets from all leading brands. Near Bond Street tube. Official Yonex stockist. One visit covers Tennis, Badminton AND Squash. Mon–Sat 10am–6pm, Thu until 7pm. Brands: Babolat, Wilson, Head, Tecnifibre, Dunlop, Adidas, Yonex.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=Wigmore+Sports+39+Wigmore+Street+Marylebone+London+W1U+1PD" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+    <div class="store-card">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">Tennisnuts — Northwood Hills</div></div>
+        <div class="store-address">Northwood Hills, Middlesex, London (Zone 6, Metropolitan Line)</div>
+      </div>
+      <div class="card-notes">Full range of tennis, badminton and squash with a hitting room to demo rackets. Note: Zone 6 — significantly further from central London than Wigmore Sports, which covers the same brands. Only worth visiting if you have a free day. Brands: Babolat, Head, Yonex, Tecnifibre, Dunlop, K-Swiss, Asics, Adidas.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=Tennisnuts+Northwood+Hills+Middlesex+London" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sport-group">
+    <div class="sport-header"><div class="sport-dot badminton"></div><div class="sport-label badminton">Badminton</div></div>
+    <div class="store-card priority">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">Wigmore Sports</div><span class="priority-badge">PRIORITY</span></div>
+        <div class="store-address">39 Wigmore St, Marylebone, London W1U 1PD</div>
+        <div class="store-phone">+44 20 7486 7761</div>
+      </div>
+      <div class="card-notes priority-notes">London's best badminton retailer. Official Yonex stockist. Same visit as Tennis and Squash priorities. Brands: Yonex, Li-Ning, Victor, Ashaway, Babolat, Karakal.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=Wigmore+Sports+39+Wigmore+Street+Marylebone+London+W1U+1PD" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sport-group">
+    <div class="sport-header"><div class="sport-dot squash"></div><div class="sport-label squash">Squash</div></div>
+    <div class="store-card priority">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">Wigmore Sports</div><span class="priority-badge">PRIORITY</span></div>
+        <div class="store-address">39 Wigmore St, Marylebone, London W1U 1PD</div>
+        <div class="store-phone">+44 20 7486 7761</div>
+      </div>
+      <div class="card-notes priority-notes">London's best squash retailer. Same visit as Tennis and Badminton priorities. Brands: Head, Dunlop, Tecnifibre, Karakal, Wilson.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=Wigmore+Sports+39+Wigmore+Street+Marylebone+London+W1U+1PD" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+    <div class="store-card">
+      <div class="card-top">
+        <div class="card-row1"><div class="store-name">Decathlon — Kensington</div></div>
+        <div class="store-address">176 Kensington High St, London W8 7RG</div>
+      </div>
+      <div class="card-notes">Large multi-sport retailer with a solid squash range at competitive price points. Useful for understanding the value-tier market. Brands: Head, Wilson, Dunlop, Artengo.</div>
+      <div class="card-actions">
+        <a class="btn-maps" href="https://www.google.com/maps/search/?api=1&query=Decathlon+176+Kensington+High+Street+London+W8+7RG" target="_blank"><span class="pin-icon">📍</span> Open in Maps</a>
+        <button class="visit-toggle" onclick="toggleVisit(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Done</button>
+      </div>
+    </div>
+  </div>
+  <div style="height:24px"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     KEY NOTES
+═══════════════════════════════════════════════════════════ -->
+<div id="notes" class="city-section">
+  <div class="city-hero">
+    <div class="city-name">Key Notes</div>
+    <div class="city-dates">You could read these before you travel</div>
+  </div>
+  <div class="notes-section" style="margin-top:16px">
+    <div class="notes-header">Key Notes — You could read these before you travel</div>
+
+    <div class="note-item">
+      <div class="note-q" onclick="toggleNote(this)">NYC — One store covers three racket sports</div>
+      <div class="note-body">NYC Racquet Sports at Herald Square (157A W 35th St) is your single most efficient stop for Lawn Tennis, Badminton AND Squash in New York. It is rated the #1 racquet sports store in NYC on both Yelp and Google, and it is on the same street as New York Golf Center. One visit covers all three racket sports.</div>
+    </div>
+
+    <div class="note-item">
+      <div class="note-q" onclick="toggleNote(this)">NYC — Wilson Flagship is the only one in New York</div>
+      <div class="note-body">Wilson's NYC Flagship at 594 Broadway (SoHo) is the only Wilson brand store in New York City. It is a 3-floor experience with an indoor play area and exclusive products you cannot buy anywhere else. This is a must-visit for Lawn Tennis brand engagement.</div>
+    </div>
+
+    <div class="note-item">
+      <div class="note-q" onclick="toggleNote(this)">Atlanta — PGA TOUR Superstore is at home here</div>
+      <div class="note-body">Atlanta is PGA TOUR Superstore's home city — their headquarters are in Roswell, metro Atlanta. The brand-new Buckhead flagship (3255 Peachtree Rd NE) opened March 7, 2026, just weeks before your visit. It is 30,000 sq ft with TrackMan technology, 5 fitting bays, a putting green, and 65,000+ club and shaft combinations. This is one of the most advanced golf retail experiences in the US and is a very significant stop.</div>
+    </div>
+
+    <div class="note-item">
+      <div class="note-q" onclick="toggleNote(this)">Atlanta — Your Serve Tennis has 10 locations</div>
+      <div class="note-body">Your Serve Tennis has 10 locations across metro Atlanta. The Buckhead location (3749 Roswell Rd) is listed as the priority because it is the closest to PGA TOUR Superstore Buckhead — you can do both stores in the same trip. East Cobb and Sandy Springs are also listed on the Atlanta tab for reference.</div>
+    </div>
+
+    <div class="note-item">
+      <div class="note-q" onclick="toggleNote(this)">London — Wigmore Sports covers three sports in one visit</div>
+      <div class="note-body">Wigmore Sports at 39 Wigmore Street, Marylebone is the single most important racket sports stop in London. It is an official Yonex stockist and carries over 2,000 rackets across Lawn Tennis, Badminton and Squash. It is near Bond Street tube station. Open Mon–Sat 10am–6pm, Thursday until 7pm.</div>
+    </div>
+
+    <div class="note-item">
+      <div class="note-q" onclick="toggleNote(this)">London — Tennisnuts is far from central London</div>
+      <div class="note-body">Tennisnuts (Northwood Hills, Middlesex) has a useful hitting room to demo rackets before buying. However, it is in Zone 6 on the Metropolitan Line — significantly further from central London than Wigmore Sports. Since Wigmore Sports covers the same brands more centrally, Tennisnuts is only worth visiting if you have a completely free day.</div>
+    </div>
+
+    <div class="note-item">
+      <div class="note-q" onclick="toggleNote(this)">Yonex UK — No physical store, needs prior arrangement</div>
+      <div class="note-body">Yonex has a UK subsidiary (Yonex UK Ltd) but no brand-owned retail store you can walk into. If you want to arrange a trade or partnership meeting with Yonex UK, this needs to be set up in advance via email or phone before you travel to London. Wigmore Sports is an official Yonex stockist and is the best physical point of contact for Yonex products in London.</div>
+    </div>
+
+    <div class="note-item">
+      <div class="note-q" onclick="toggleNote(this)">Callaway, TaylorMade, PING, Titleist — brand appointments across all cities</div>
+      <div class="note-body">These golf brands do not have standalone flagship stores in New York, Atlanta, or London that can simply be walked into. Any brand-level meetings need to be arranged in advance directly with the brand's regional representatives. The retailers listed in each city (PGA TOUR Superstore, Capital Golf, American Golf) all carry the full ranges of these brands and are the best physical access points at each location.</div>
+    </div>
+
+  </div>
+  <div style="height:32px"></div>
+</div>
+
+<script>
+function showCity(id) {
+  document.querySelectorAll('.city-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const tabs = document.querySelectorAll('.tab');
+  const map = {overview:0,ny:1,atl:2,lon:3,notes:4};
+  tabs[map[id]].classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleVisit(btn) {
+  btn.classList.toggle('done');
+  btn.querySelector('svg').style.stroke = btn.classList.contains('done') ? '#2e7d32' : 'currentColor';
+}
+function toggleNote(el) {
+  el.parentElement.classList.toggle('open');
+}
+</script>
+</body>
+</html>
